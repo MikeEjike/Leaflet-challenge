@@ -91,7 +91,6 @@ function createEarthQuake(data) {
       grades = [0, 1, 2, 3, 4, 5],
       labels = ['Magnitude'];
 
-    // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
       div.innerHTML +=
         '<i style="background:' +
@@ -121,37 +120,5 @@ function createEarthQuake(data) {
       return "#bd0026";
     }
   }
-  // else if (rating === 5){
-  //     return = "orange"
-  // }
-  // else{};
-  // }
-  //   var blueMarker = L.AwesomeMarkers.icon({
-  //     markerColor: customColor,
-  //   });
 
-  //   var bikeMarkers = [];
-
-  //   // Loop through the stations array
-  //   for (var index = 0; index < stations.length; index++) {
-  //     var station = stations[index];
-
-  //     // For each station, create a marker and bind a popup with the station's name
-  //     var bikeMarker = L.marker([station.lat, station.lon])
-  //       .bindPopup("<h3>" + station.name + "<h3><h3>Capacity: " + station.capacity + "</h3>");
-
-  //     // Add the marker to the bikeMarkers array
-  //     bikeMarkers.push(bikeMarker);
-  //   }
-  // //   let myMap = createMap();
-
-  // //   points = data.map((d) => [
-  // //     d.location.coordinates[1],
-  // //     d.location.coordinates[0],
-  // //   ]);
-
-  // //   console.log(points)
-
-  // //   var heat = L.heatLayer(points, { radius: 20, blur: 35 })
-  // //   heat.addTo(myMap);
 }
