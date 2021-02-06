@@ -51,15 +51,11 @@ function createEarthQuake(data) {
   console.log(data.features);
   //   console.log(data.features[0].geometry.coordinates);
   let locationData = data.features;
-  let latLng = [];
-  let lng = [];
-  let lat = [];
+
   locationData.forEach((item) => {
     let coordinate = item.geometry.coordinates;
-
     let intensity = item.properties.mag;
     let coordinates = [coordinate[1], coordinate[0]];
-
     let circle = L.circle(coordinates, intensity * 35000, {
       color: colorGrade(intensity),
     });
@@ -77,21 +73,16 @@ function createEarthQuake(data) {
       .openPopup();
 
     circle.addTo(myMap);
-
-    lng.push(coordinate[0]);
-    lat.push(coordinate[1]);
-    latLng.push(coordinates);
   });
-  console.log(latLng);
+
 
   let legend = L.control({ position: "bottomright" });
-
   legend.onAdd = function (map) {
     let div = L.DomUtil.create("div", "info legend"),
       grades = [0, 1, 2, 3, 4, 5],
       labels = ['Magnitude'];
 
-    for (var i = 0; i < grades.length; i++) {
+    for (let i = 0; i < grades.length; i++) {
       div.innerHTML +=
         '<i style="background:' +
         colorGrade(grades[i] + 0) +
@@ -102,7 +93,6 @@ function createEarthQuake(data) {
 
     return div;
   };
-
   legend.addTo(myMap);
 
   function colorGrade(magnitude) {
