@@ -60,22 +60,51 @@ function createEarthQuake(data) {
     let intensity = item.properties.mag;
     let coordinates = [coordinate[1], coordinate[0]];
 
-    let circle = L.circle(coordinates, intensity*35000, {color: colorGrade(intensity)})
-    
-    
-    circle.bindPopup(
+    let circle = L.circle(coordinates, intensity * 35000, {
+      color: colorGrade(intensity),
+    });
+
+    circle
+      .bindPopup(
         "<h3>" +
-        item.properties.place //   feature.properties.place +
-        + "</h3><hr></p><p> Magnitude: " + item.properties.mag  + "</p><p> Coordinates (lat, lng): " + coordinates + "</p>"
-        ).openPopup();
-        
-    circle.addTo(myMap)
+          item.properties.place + //   feature.properties.place +
+          "</h3><hr></p><p> Magnitude: " +
+          item.properties.mag +
+          "</p><p> Coordinates (lat, lng): " +
+          coordinates +
+          "</p>"
+      )
+      .openPopup();
+
+    circle.addTo(myMap);
 
     lng.push(coordinate[0]);
     lat.push(coordinate[1]);
     latLng.push(coordinates);
   });
   console.log(latLng);
+
+  let legend = L.control({ position: "bottomright" });
+
+  legend.onAdd = function (map) {
+    let div = L.DomUtil.create("div", "info legend"),
+      grades = [0, 1, 2, 3, 4, 5],
+      labels = ['Magnitude'];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+      div.innerHTML +=
+        '<i style="background:' +
+        colorGrade(grades[i] + 0) +
+        '"></i> ' +
+        grades[i] +
+        (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+    }
+
+    return div;
+  };
+
+  legend.addTo(myMap);
 
   function colorGrade(magnitude) {
     if (magnitude < 1) {
@@ -88,7 +117,7 @@ function createEarthQuake(data) {
       return "#fd8d3c";
     } else if (magnitude < 5) {
       return "#f03b20";
-    } else if (magnitude > 5) {
+    } else if (magnitude < 10) {
       return "#bd0026";
     }
   }
